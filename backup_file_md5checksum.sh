@@ -1,7 +1,13 @@
 #!/bin/bash
 #Backup file or folder
 clear
-
+#create folder log
+if [ -d /var/log/logbackup ]
+then
+echo
+else
+mkdir -p /var/log/logbackup
+fi
 #check source backup
 while true
 	do
@@ -35,7 +41,7 @@ done
 read -p "You want backup to folder: " fddes
 echo ""
 mkdir -p $fddes
-
+namelog="log_backup_"$(date +%m%d%Y)
 tbk=$(date +%H)":"$(date +%M)" "$(date +%m)"-"$(date +%d)"-"$(date +%Y)
 
 desf=$(echo $fdbk | tr '/' ' ' | awk '{print $NF}')
@@ -50,12 +56,12 @@ then
 			then
 				yes | cp -f $fdbk $fddes/$desf 2>/dev/null
 				echo "$tbk: Backup $fdbk to $fddes/$desf"
-				echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup
+				echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup/$namelog
 			fi
 	else
 		cp -f $fdbk $fddes/$desf
 		echo "$tbk: Backup $fdbk to $fddes/$desf"
-		echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup
+		echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup/$namelog
 	fi
 else
 cd $fdbk
@@ -73,14 +79,15 @@ cd $fdbk
 			then
 				yes | cp -f $j $fddes/$desf/$j 2>/dev/null
 				echo "$tbk: Backup $j to $fddes/$desf/$j"
-				echo "$tbk: Backup $j to $fddes/$desf/$j" >> /var/log/logbackup
+				echo "$tbk: Backup $j to $fddes/$desf/$j" >> /var/log/logbackup/$namelog
 			fi
 		else
 			yes | cp -f $j $fddes/$desf/$j 2>/dev/null
 			echo "$tbk: Backup $j to $fddes/$desf/$j"
-			echo "$tbk: Backup $j to $fddes/$desf/$j" >> /var/log/logbackup
+			echo "$tbk: Backup $j to $fddes/$desf/$j" >> /var/log/logbackup/$namelog
 		fi
 	done
 fi
-echo "View Log Backup is file: /var/log/logbackup"
+ln -sf /var/log/logbackup/$namelog /var/log/logbackup/log_backup
+echo "View Log Backup is file: /var/log/logbackup/log_backup"
 exit 1
