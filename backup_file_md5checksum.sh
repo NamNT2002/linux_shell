@@ -57,6 +57,9 @@ then
 				yes | cp -f $fdbk $fddes/$desf 2>/dev/null
 				echo "$tbk: Backup $fdbk to $fddes/$desf"
 				echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup/$namelog
+				#if you want remove file old then uncomment under two line
+				#else
+				#rm -rf $fdbk
 			fi
 	else
 		cp -f $fdbk $fddes/$desf
@@ -81,6 +84,9 @@ cd $fdbk
 				yes | cp -f $j $fddes/$desf/$j 2>/dev/null
 				echo "$tbk: Backup $j to $fddes/$desf/$j"
 				echo "$tbk: Backup $j to $fddes/$desf/$j" >> /var/log/logbackup/$namelog
+			#if you want remove file old then uncomment under two line
+			#else
+			#rm -rf $j	
 			fi
 		else
 			yes | cp -f $j $fddes/$desf/$j 2>/dev/null
