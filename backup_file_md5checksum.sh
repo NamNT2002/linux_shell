@@ -64,6 +64,7 @@ then
 		echo "$tbk: Backup $fdbk to $fddes/$desf" >> /var/log/logbackup/$namelog
 	fi
 else
+getfd=$(pwd)
 cd $fdbk
 	for i in $(find * -type d)
 	do
@@ -88,6 +89,11 @@ cd $fdbk
 		fi
 	done
 fi
+cd $getfd
+
+#if you want remove Source file backup
+#You can uncomment under line
+#	rm -rf $fdbk
 ln -sf /var/log/logbackup/$namelog /var/log/logbackup/log_backup
 echo "View Log Backup is file: /var/log/logbackup/log_backup"
 exit 1
